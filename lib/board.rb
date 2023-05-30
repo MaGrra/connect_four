@@ -11,20 +11,21 @@ class Board
     puts
     puts " #{(1..7).to_a.join('   ')}"
     puts '----------------------------'
-    6.times { |i| puts grid[i].join('  |') }
+    6.times { |i| puts grid[i].join(' |') }
   end
 
   def place_token(number, symbol)
     column = number - 1
     row = find_available_row(column)
+    return 'This row is full, try another' if row.nil?
+
     grid[row][column] = symbol
   end
 
   def find_available_row(row = 5, column)
     return row if grid[row][column] != '⚫' && grid[row][column] != '⚪'
-    return if row < 0
+    return if row.negative?
 
     find_available_row(row - 1, column)
   end
-
 end
