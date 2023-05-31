@@ -13,11 +13,18 @@ class Game
     @player2 = Player.new('Player 2', '⚪')
   end
 
+  def play_game
+    setup
+
+    until board.game_over?
+      play_round
+    end
+    finish_info
+  end
+
   def setup
     board.display
     starting_player
-    play_round
-    play_round
   end
 
   def play_round
@@ -34,10 +41,6 @@ class Game
     location = gets.chomp.to_i
     board.place_token(location, current_player.symbol)
     board.display
-  end
-
-  def game_over?
-    
   end
 
   def switch_players

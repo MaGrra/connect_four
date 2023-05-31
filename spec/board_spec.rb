@@ -34,4 +34,76 @@ describe Board do
       end
     end
   end
+
+  describe '#game_over?' do
+    context 'when board is empty' do
+      it 'is not game over' do
+        expect(board.game_over?('⚫')).to be false
+      end
+    end
+
+    context 'when board is full' do
+      before do
+        board.instance_variable_set(:@grid, 
+         [['⚪', '⚫', '⚫', '⚫', '⚫', '⚫', '⚫'],
+          ['⚫', '⚪', '⚪', '⚪', '⚪', '⚪', '⚪'],
+          ['⚪', '⚫', '⚫', '⚫', '⚫', '⚫', '⚫'],
+          ['⚪', '⚪', '⚪', '⚪', '⚪', '⚪', '⚪'],
+          ['⚫', '⚫', '⚫', '⚫', '⚫', '⚫', '⚫'],
+          ['⚪', '⚫', '⚪', '⚪', '⚪', '⚪', '⚪']])
+      end
+
+      it 'is game over' do
+        expect(board.game_over?('⚫')).to be true
+      end
+    end
+
+    context 'when there is a vertical win' do
+      before do
+        board.instance_variable_set(:@grid, 
+         [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['⚪', nil, nil, nil, nil, '⚪', nil],
+          ['⚫', nil, nil, nil, nil, '⚪', nil],
+          ['⚪', '⚫', nil, nil, nil, '⚪', nil],
+          ['⚪', '⚫', '⚫', nil, nil, '⚪', nil]])
+      end
+
+      it 'is game over' do
+        expect(board.game_over?('⚪')).to be true
+      end
+    end
+
+    context 'when there is a horizontal win' do
+      before do
+        board.instance_variable_set(:@grid, 
+         [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['⚪', nil, nil, nil, nil, nil, nil],
+          ['⚫', nil, nil, nil, nil, nil, nil],
+          ['⚪', '⚫', nil, nil, nil, nil, nil],
+          ['⚪', '⚫', '⚫', '⚫', '⚫', nil, nil]])
+      end
+
+      it 'is game over' do
+        expect(board.game_over?('⚫')).to be true
+      end
+    end
+
+    context 'when there is a diagonal win' do
+      before do
+        board.instance_variable_set(:@grid, 
+         [[nil, '⚫', nil, nil, nil, nil, nil],
+          ['⚫', nil, '⚫', nil, nil, nil, nil],
+          ['⚪', '⚫', nil, '⚫', nil, nil, nil],
+          ['⚫', nil, '⚫', nil, '⚫', nil, nil],
+          [nil, '⚫', nil, '⚫', nil, nil, nil],
+          ['⚪', '⚫', '⚪', nil, '⚪', nil, nil]])
+      end
+
+      it 'is game over' do
+        expect(board.game_over?('⚫')).to be true
+      end
+    end
+  end
 end
