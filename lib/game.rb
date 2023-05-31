@@ -15,11 +15,16 @@ class Game
 
   def play_game
     setup
-
-    until board.game_over?
+    
+    until board.game_over?(current_player.symbol)
+      @current_player = switch_players
       play_round
     end
     finish_info
+  end
+
+  def finish_info
+    puts "#{current_player.name} won"
   end
 
   def setup
@@ -28,8 +33,8 @@ class Game
   end
 
   def play_round
-    promt_input
-    @current_player = switch_players
+    board.place_token(promt_input, current_player.symbol)
+    board.display
   end
   
   def starting_player 
@@ -38,9 +43,17 @@ class Game
 
   def promt_input
     puts "\n#{@current_player.name} make your move!"
-    location = gets.chomp.to_i
-    board.place_token(location, current_player.symbol)
-    board.display
+    location = valid_input
+  end
+
+  def valid_input
+    num = gets.chomp.to_i
+    if num.between?(1,7)
+      return num
+    else
+      puts "Enter a number between 1-7"
+      num = gets.chomp.to_i
+    end
   end
 
   def switch_players

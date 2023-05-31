@@ -105,5 +105,21 @@ describe Board do
         expect(board.game_over?('⚫')).to be true
       end
     end
+
+    context 'diagonal other way around win' do
+      before do
+        board.instance_variable_set(:@grid, 
+         [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, '⚫', nil, '⚫', nil, nil],
+          ['⚪', '⚫', nil, '⚫', nil, nil, nil],
+          ['⚫', nil, '⚫', nil, '⚫', nil, nil],
+          [nil, '⚫', nil, '⚫', nil, nil, nil],
+          ['⚪', '⚫', '⚪', nil, '⚪', nil, nil]])
+      end
+
+      it 'is game over' do
+        expect(board.game_over?('⚫')).to be true
+      end
+    end
   end
 end

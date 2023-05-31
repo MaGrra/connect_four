@@ -17,4 +17,26 @@ describe Game do
       end
     end
   end
+
+  describe '#staring_player' do
+    context 'decide which player starts' do
+      it 'Chose one player' do
+        game.starting_player
+        expect(game.starting_player.name).to eq('Player 1').or(eq('Player 2'))
+      end
+    end
+  end
+
+  describe '#valid_input' do
+    context 'returns a valid input' do
+      before do
+        num = 6
+        allow(game).to receive(:gets).and_return("#{num}\n") # Simulate user input
+      end
+
+      it 'returns a valid number' do
+        expect(game.valid_input).to eq(6)
+      end
+    end
+  end
 end

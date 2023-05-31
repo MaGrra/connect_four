@@ -1,4 +1,4 @@
-require 'matrix'
+require 'colorize'
 
 # frozen_string_literal: true
 
@@ -12,15 +12,17 @@ class Board
 
   def display
     puts
-    puts " #{(1..7).to_a.join('   ')}"
+    puts ' ' + (1..7).to_a.join('   ')
     puts '----------------------------'
-    6.times { |i| puts grid[i].join('  |') }
+    6.times { |i| puts grid[i].join('| ') }
   end
 
   def get_diagonals
+    result = []
     padding = [*0..(grid.length - 1)].map { |i| [nil] * i }
-    padded = padding.reverse.zip(grid).zip(padding).map(&:flatten)
-    padded.transpose.map(&:compact).select { |diagonal| diagonal.length > 3 }
+    result += padding.zip(grid).zip(padding.reverse).map(&:flatten)
+    result += padding.reverse.zip(grid).zip(padding).map(&:flatten)
+    result.transpose.map(&:compact).select { |diagonal| diagonal.length > 3 }
   end
 
 
@@ -67,7 +69,10 @@ class Board
   def place_token(number, symbol)
     column = number - 1
     row = find_available_row(column)
-    return 'This row is full, try another' if row.nil?
+    if row.nil?
+      puts "This row is full, try another"
+      return 'This row is full, try another'
+    end
 
     grid[row][column] = symbol
   end
