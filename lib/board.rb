@@ -1,4 +1,4 @@
-require 'colorize'
+require_relative './color'
 
 # frozen_string_literal: true
 
