@@ -24,7 +24,11 @@ class Game
   end
 
   def finish_info
-    puts "#{current_player.name} won"
+    if board.game_won?(current_player.symbol)
+      puts "#{current_player.name} won"
+    else
+      puts "No winners"
+    end
   end
 
   def setup

@@ -38,5 +38,12 @@ describe Game do
         expect(game.valid_input).to eq(6)
       end
     end
+
+    context 'return error' do
+      it 'prompts the user to enter a number between 1-7 when an invalid input is provided' do
+        allow(game).to receive(:gets).and_return('10') # Stub user input: '10' is invalid, '6' is valid
+        expect { game.valid_input }.to output("Enter a number between 1-7\n").to_stdout
+      end
+    end
   end
 end
